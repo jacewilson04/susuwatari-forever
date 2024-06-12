@@ -1,0 +1,53 @@
+:root {
+    --blob-padding: 5px;
+}
+
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
+    height: 100%;
+    background-color: gray;
+}
+
+header {
+    right: 10px;
+    color: white;
+    z-index: 1;
+    position: absolute;
+    /* Makes it so they can be clicked underneath */
+    pointer-events: none;
+}
+
+.top_blob {
+    border-radius: 10px;
+    /* height: 40px; */
+    color: white;
+    background-color: rgb(20, 20, 20);
+    opacity: 0.85;
+    float: left;
+    margin-left: 10px;
+    padding-left: var(--blob-padding);
+    padding-right: var(--blob-padding);
+    line-height: 1.5;
+}
+
+.susu {
+    position: absolute;
+    height: 75px;
+    width: 75px;
+}
+
+.point {
+    position: absolute;
+    height: 5px;
+    width: 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+#main_canvas {
+    z-index: -1;
+    margin: 0;
+}
