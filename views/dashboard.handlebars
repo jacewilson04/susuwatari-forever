@@ -1,0 +1,27 @@
+<h2>CREATE A POST</h2>
+<form id="post_forum">
+    <br>
+    <label for="title">Title:</label><br>
+    <input type="text" id="title" name="title"><br>
+    <label for="content">Content:</label><br>
+    <input type="text" id="content" name="content" size="100"><br>
+    <input type="submit" value="POST"><br>
+</form>
+
+<h2>MY POSTS</h2>
+<ul>
+    {{#each posts}}
+        <li class="my_post" data-id="{{id}}">
+            <h3>{{title}}</h3>
+            <p>{{content}}</p>
+            <button class="delete">DELETE</button>
+            <button class="update">UPDATE</button>
+        </li>
+    {{/each}}
+</ul>
+
+<h2>USER SETTINGS</h2>
+
+<button id="logout">LOGOUT</button>
+
+<script src="/js/dashboard.js"></script>

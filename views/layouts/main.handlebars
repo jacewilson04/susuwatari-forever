@@ -9,18 +9,22 @@
 </head>
 
 <header>
-    <h1 class="top_blob" id="count"> 0 </h1>
-    <h1 class="top_blob">poopnugget142</h1>
-    <h1 class="top_blob"><b>SUSUWATARI FOREVER</b></h1>
+    {{#if logged_in}}
+    <h1 class="top_blob" id="count">{{pop_count}}</h1>
+    <h1 class="top_blob"><a href="/dashboard">{{username}}</a></h1>
+    {{/if}}
+    {{#unless logged_in}}
+    <h1 class="top_blob" id="login">SIGN IN</h1>
+    {{/unless}}
+    <h1 class="top_blob"><b><a href="/">SUSUWATARI FOREVER</a></b></h1>
 </header>
 
 <body>
-    {{!-- Not actually a canvas lol --}}
-    <div id="main_canvas"> </div>
+    {{{ body }}}
 </body>
 
 </html>
 
-{{#unless post}}
-<script src="/js/game.js"></script>
+{{#unless logged_in}}
+    <script src="/js/loginButton.js"></script>
 {{/unless}}

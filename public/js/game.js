@@ -45,6 +45,20 @@ let collums, rows;
 
 let available_posts = [];
 
+let modal = document.getElementById("modal");
+let title = document.getElementById("modal_title");
+let content = document.getElementById("modal_text");
+let author = document.getElementById("modal_author");
+let date_label = document.getElementById('modal_date');
+let count = document.getElementById('count')
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
 const finish_render = async () => {
     const response = await fetch(`/api/post/get-amount/${susu_count}`, {
         method: 'GET',
@@ -52,8 +66,6 @@ const finish_render = async () => {
     });
 
     available_posts = await response.json()
-
-    console.log(available_posts)
 }
 
 const create_susu = (position) => {
@@ -69,22 +81,44 @@ const create_susu = (position) => {
     canvas.appendChild(susu);
 
     susu.addEventListener("click", async () => {
+        //When we are out of soots then refresh the page
+        if (available_posts.length <= 0) {
+            alert("No more posts sorry!")
+            document.location.replace('/');
+            return;
+        }
+
         let audio = new Audio('/assets/audio/squish.mp3');
         audio.volume = 0.3;
         audio.play();
         susu.remove();
 
-        if (available_posts.length > 0) {
-            let post_id = available_posts[0].id;
+        let post_id = available_posts[0].id;
 
-            available_posts.shift();
-            
-            window.location.href = `/posts/${post_id}`
-        }
+        available_posts.shift();
+        
+        const response = await fetch(`/api/post/${post_id}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        // Falsely incremeant the number on the client and assume that it also went up on the server
+        count.textContent = Number(count.textContent) + 1
+
+        let post = await response.json();
+
+        modal.style.display = "block";
+        title.textContent = post.title;
+        content.textContent = post.content;
+        author.textContent = post.author.username;
+
+        let date = new Date(post.date).toLocaleString()
+        date_label.textContent = date;
     });
 };
 
-create_point = (position) => {
+// DEBUG CODE!! easier to view while testing
+const create_point = (position) => {
     let canvas = document.getElementById("main_canvas");
     const point = document.createElement("span");
 
@@ -97,7 +131,7 @@ create_point = (position) => {
     return point;
 }
 
-function random_with_min(min, max) { // min and max included 
+const random_with_min = (min, max) => { // min and max included 
     return Math.random() * (max - min + 1) + min;
 }
 
@@ -123,7 +157,7 @@ const render = () => {
             sample.add(pos);
 
             let col = Math.floor(sample.x / w);
-            let row = Math.floor(sample.y / w)
+            let row = Math.floor(sample.y / w);
             
             // Checks if new point is off screen if it is do nothing
             if (!(col > -1 && row > -1 && col < collums && row < rows && !grid[col + row * collums])) {
@@ -133,7 +167,7 @@ const render = () => {
             let ok = true;
             for (let i = -1; i <= 1; i++) {
                 for (let j = -1; j <= 1; j++) {
-                    let neighbor_index = (col+i) + (row+j) * collums
+                    let neighbor_index = (col+i) + (row+j) * collums;
                     let neighbor = grid[neighbor_index];
 
                     // Only do this if there is actually a point here
@@ -152,7 +186,7 @@ const render = () => {
                 found = true;
                 grid[col + row * collums] = sample;
                 active.push(sample);
-                // For visual clarity remove for performance
+                // For visual clarity remove break for performance
                 // break;
             }
         }

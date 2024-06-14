@@ -1,12 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
-const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
 
-class Post extends Model {
+class Post extends Model {}
 
-}
-
-
+// post object
 Post.init(
     {
       id: {
@@ -27,9 +24,14 @@ Post.init(
         allowNull: false,
         defaultValue: DataTypes.NOW,
       },
-      user_id: {
+      author_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: "user",
+          key: "id",
+          unique: false,
+        },
       }
     },
     {
