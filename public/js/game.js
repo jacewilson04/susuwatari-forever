@@ -103,7 +103,9 @@ const create_susu = (position) => {
         });
 
         // Falsely incremeant the number on the client and assume that it also went up on the server
-        count.textContent = Number(count.textContent) + 1
+        if (count) {
+            count.textContent = Number(count.textContent) + 1
+        }
 
         let post = await response.json();
 
