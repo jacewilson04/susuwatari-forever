@@ -10,6 +10,10 @@ Click on a susuwatari to view the post behind it and watch as (for signed in use
 
 Me!
 
+The reference for the code I used for the susu rendering
+https://www.youtube.com/watch?v=flQgnCUxHlw
+
+
 ## License
 
 Please refer to the LICENSE in the repo.

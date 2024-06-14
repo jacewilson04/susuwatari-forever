@@ -1,6 +1,4 @@
-// The reference for the code I used for the susu rendering
-// https://www.youtube.com/watch?v=flQgnCUxHlw
-
+// The speed at which the susu positions are calculated
 const SIMULATON_SPEED = 16;
 
 class Vector {
